@@ -1,0 +1,64 @@
+{
+  "name": "@aerosstube/anime-parser-kodik-ts",
+  "version": "1.0.0",
+  "description": "TypeScript библиотека для парсинга аниме с сайта Kodik с полной типизацией",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/entry.ts",
+    "test": "npm run build && node dist/example.js",
+    "example": "ts-node src/example.ts",
+    "start": "ts-node src/entry.ts",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "anime",
+    "parser",
+    "kodik",
+    "m3u8",
+    "streaming",
+    "typescript",
+    "anime-parser",
+    "video-parser",
+    "russian-anime"
+  ],
+  "author": {
+    "name": "aerosstube",
+    "email": "aerosstube@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aerosstube/anime-parser-kodik-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aerosstube/anime-parser-kodik-ts/issues"
+  },
+  "homepage": "https://github.com/aerosstube/anime-parser-kodik-ts#readme",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "base-64": "^1.0.0",
+    "cheerio": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/base-64": "^1.0.2",
+    "@types/node": "^22.15.21",
+    "readline-sync": "^1.4.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

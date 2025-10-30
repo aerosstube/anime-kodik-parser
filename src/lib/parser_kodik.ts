@@ -302,7 +302,7 @@ export class KodikParser {
             $ = load(data);
         }
         if (this._isSerial(link)) {
-            let series_count = 0;
+            let series_count: number;
             try {
                 series_count = $('div.serial-series-box select option').length;
             } catch (e) {

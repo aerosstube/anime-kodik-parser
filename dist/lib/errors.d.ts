@@ -1,38 +1,55 @@
 /**
  * Классы ошибок для anime-parser-kodik
  */
+/**
+ * Опции для создания ошибки с сохранением оригинальной ошибки
+ */
+export interface ErrorOptions {
+    cause?: unknown;
+}
 export declare class TokenError extends Error {
-    constructor(message: string);
+    cause?: unknown;
+    constructor(message: string, options?: ErrorOptions);
 }
 export declare class ServiceError extends Error {
-    constructor(message: string);
+    cause?: unknown;
+    constructor(message: string, options?: ErrorOptions);
 }
 export declare class PostArgumentsError extends Error {
-    constructor(message: string);
+    cause?: unknown;
+    constructor(message: string, options?: ErrorOptions);
 }
 export declare class NoResults extends Error {
-    constructor(message: string);
+    cause?: unknown;
+    constructor(message: string, options?: ErrorOptions);
 }
 export declare class UnexpectedBehavior extends Error {
-    constructor(message: string);
+    cause?: unknown;
+    constructor(message: string, options?: ErrorOptions);
 }
 export declare class QualityNotFound extends Error {
-    constructor(message: string);
+    cause?: unknown;
+    constructor(message: string, options?: ErrorOptions);
 }
 export declare class AgeRestricted extends Error {
-    constructor(message: string);
+    cause?: unknown;
+    constructor(message: string, options?: ErrorOptions);
 }
 export declare class TooManyRequests extends Error {
-    constructor(message: string);
+    cause?: unknown;
+    constructor(message: string, options?: ErrorOptions);
 }
 export declare class ContentBlocked extends Error {
-    constructor(message: string);
+    cause?: unknown;
+    constructor(message: string, options?: ErrorOptions);
 }
 export declare class ServiceIsOverloaded extends Error {
-    constructor(message: string);
+    cause?: unknown;
+    constructor(message: string, options?: ErrorOptions);
 }
 export declare class DecryptionFailure extends Error {
-    constructor(message: string);
+    cause?: unknown;
+    constructor(message: string, options?: ErrorOptions);
 }
 export declare const errors: {
     TokenError: typeof TokenError;

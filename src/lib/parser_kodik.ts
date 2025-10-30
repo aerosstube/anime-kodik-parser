@@ -308,7 +308,7 @@ export class KodikParser {
             } catch (e) {
                 throw new UnexpectedBehavior(`Ошибка при получении количества серий: ${e}`);
             }
-            let translations_div: ReturnType<ReturnType<typeof load>> | null;
+            let translations_div: ReturnType<ReturnType<typeof load>>;
             try {
                 translations_div = $('div.serial-translations-box select option');
             } catch (e) {
@@ -316,10 +316,10 @@ export class KodikParser {
             }
             return {
                 series_count: series_count,
-                translations: this._generateTranslationsDict(translations_div || $(''), $)
+                translations: this._generateTranslationsDict(translations_div, $)
             };
         } else if (this._isVideo(link)) {
-            let translations_div: ReturnType<ReturnType<typeof load>> | null;
+            let translations_div: ReturnType<ReturnType<typeof load>>;
             try {
                 translations_div = $('div.movie-translations-box select option');
             } catch (e) {
@@ -327,7 +327,7 @@ export class KodikParser {
             }
             return {
                 series_count: 0,
-                translations: this._generateTranslationsDict(translations_div || $(''), $)
+                translations: this._generateTranslationsDict(translations_div, $)
             };
         } else {
             throw new UnexpectedBehavior('Ссылка на данные не была распознана как ссылка на сериал или фильм');

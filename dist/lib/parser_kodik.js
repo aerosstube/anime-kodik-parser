@@ -22,7 +22,7 @@ class KodikParser {
                 throw new errors_1.ServiceError('Токен должен быть передан в конструктор или используйте createParser()');
             }
             catch (ex) {
-                throw new errors_1.ServiceError(`Произошла ошибка при попытке автоматического получения токена kodik. Ошибка: ${ex}`);
+                throw new errors_1.ServiceError(`Произошла ошибка при попытке автоматического получения токена kodik. Ошибка: ${ex}`, { cause: ex });
             }
         }
         this.TOKEN = token;
@@ -47,7 +47,7 @@ class KodikParser {
         }
         catch (e) {
             const error = e;
-            throw new errors_1.ServiceError(`Произошла ошибка при запросе к kodik api. Ожидался код "200", получен: "${error.response?.status || 'нет ответа'}"`);
+            throw new errors_1.ServiceError(`Произошла ошибка при запросе к kodik api. Ожидался код "200", получен: "${error.response?.status || 'нет ответа'}"`, { cause: e });
         }
         if ('error' in data && data['error'] === 'Отсутствует или неверный токен') {
             throw new errors_1.TokenError('Отсутствует или неверный токен');
@@ -76,7 +76,7 @@ class KodikParser {
         }
         catch (e) {
             if (e instanceof errors_1.NoResults) {
-                throw new errors_1.NoResults(`По запросу "${title}" ничего не найдено`);
+                throw new errors_1.NoResults(`По запросу "${title}" ничего не найдено`, { cause: e });
             }
             throw e;
         }
@@ -95,7 +95,7 @@ class KodikParser {
         }
         catch (e) {
             if (e instanceof errors_1.NoResults) {
-                throw new errors_1.NoResults(`По id ${id_type} "${id}" ничего не найдено`);
+                throw new errors_1.NoResults(`По id ${id_type} "${id}" ничего не найдено`, { cause: e });
             }
             throw e;
         }
@@ -235,7 +235,7 @@ class KodikParser {
             data = resp.data;
         }
         catch (e) {
-            throw new errors_1.ServiceError('Ошибка при получении ссылки на данные');
+            throw new errors_1.ServiceError('Ошибка при получении ссылки на данные', { cause: e });
         }
         if ('error' in data && data['error'] === 'Отсутствует или неверный токен') {
             throw new errors_1.TokenError('Отсутствует или неверный токен');
@@ -266,7 +266,7 @@ class KodikParser {
             data = resp.data;
         }
         catch (e) {
-            throw new errors_1.ServiceError('Ошибка при получении страницы данных');
+            throw new errors_1.ServiceError('Ошибка при получении страницы данных', { cause: e });
         }
         let $;
         if (this.USE_LXML) {
@@ -387,7 +387,7 @@ class KodikParser {
             data = resp.data;
         }
         catch (e) {
-            throw new errors_1.ServiceError('Ошибка при получении страницы данных');
+            throw new errors_1.ServiceError('Ошибка при получении страницы данных', { cause: e });
         }
         let $;
         if (this.USE_LXML) {
@@ -484,7 +484,7 @@ class KodikParser {
             data = resp.data;
         }
         catch (e) {
-            throw new errors_1.ServiceError('Ошибка при получении ссылки на видео');
+            throw new errors_1.ServiceError('Ошибка при получении ссылки на видео', { cause: e });
         }
         const data_url = data.links['360'][0].src;
         let url;
@@ -545,7 +545,7 @@ class KodikParser {
             data = resp.data;
         }
         catch (e) {
-            throw new errors_1.ServiceError('Ошибка при получении post link');
+            throw new errors_1.ServiceError('Ошибка при получении post link', { cause: e });
         }
         let idx = data.indexOf('$.ajax');
         if (idx === -1)
@@ -561,7 +561,7 @@ class KodikParser {
             data = resp.data;
         }
         catch (e) {
-            throw new errors_1.ServiceError('Ошибка при получении токена');
+            throw new errors_1.ServiceError('Ошибка при получении токена', { cause: e });
         }
         let idx = data.indexOf('token=');
         if (idx === -1)

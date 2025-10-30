@@ -140,6 +140,24 @@ interface AnimeInfo {
 - `ServiceIsOverloaded` - Сервис перегружен
 - `DecryptionFailure` - Ошибка расшифровки
 
+### Сохранение оригинальных ошибок
+
+Все пользовательские ошибки поддерживают сохранение оригинальной причины через свойство `cause`. Это позволяет отслеживать полную цепочку ошибок для отладки и логирования:
+
+```typescript
+try {
+    await parser.search('Наруто');
+} catch (error) {
+    console.log('Сообщение:', error.message);
+    console.log('Оригинальная причина:', error.cause);
+    // Можно получить детали низкоуровневой ошибки
+    if (error.cause) {
+        console.log('Код ошибки:', error.cause.code);
+        console.log('Стек:', error.cause.stack);
+    }
+}
+```
+
 ## Константы
 
 ### Типы аниме

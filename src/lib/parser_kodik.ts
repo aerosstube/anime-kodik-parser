@@ -152,16 +152,7 @@ export class KodikParser {
             if (next_page !== null && next_page !== undefined) {
                 payload['next'] = next_page;
             }
-            let data: Record<string, unknown>;
-            try {
-                data = await this.apiRequest('list', payload);
-            } catch (e) {
-                if (e instanceof NoResults) {
-                    data = { results: [] };
-                } else {
-                    throw e;
-                }
-            }
+            const data: Record<string, unknown> = await this.apiRequest('list', payload);
             if ('next_page' in data) {
                 next_page = (data['next_page'] as string).substring((data['next_page'] as string).lastIndexOf('=') + 1);
             } else {
@@ -315,13 +306,13 @@ export class KodikParser {
             try {
                 series_count = $('div.serial-series-box select option').length;
             } catch (e) {
-                series_count = 0;
+                throw new UnexpectedBehavior(`Ошибка при получении количества серий: ${e}`);
             }
             let translations_div: ReturnType<ReturnType<typeof load>> | null;
             try {
                 translations_div = $('div.serial-translations-box select option');
             } catch (e) {
-                translations_div = null;
+                throw new UnexpectedBehavior(`Ошибка при получении переводов для сериала: ${e}`);
             }
             return {
                 series_count: series_count,
@@ -332,7 +323,7 @@ export class KodikParser {
             try {
                 translations_div = $('div.movie-translations-box select option');
             } catch (e) {
-                translations_div = null;
+                throw new UnexpectedBehavior(`Ошибка при получении переводов для фильма: ${e}`);
             }
             return {
                 series_count: 0,

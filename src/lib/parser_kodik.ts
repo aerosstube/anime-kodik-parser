@@ -41,7 +41,7 @@ export class KodikParser {
                 // Поэтому требуем передачи токена или используем createParser
                 throw new ServiceError('Токен должен быть передан в конструктор или используйте createParser()');
             } catch (ex) {
-                throw new ServiceError(`Произошла ошибка при попытке автоматического получения токена kodik. Ошибка: ${ex}`);
+                throw new ServiceError('Произошла ошибка при попытке автоматического получения токена kodik', { cause: ex });
             }
         }
         this.TOKEN = token;
@@ -66,7 +66,7 @@ export class KodikParser {
             data = resp.data;
         } catch (e: unknown) {
             const error = e as { response?: { status?: string } };
-            throw new ServiceError(`Произошла ошибка при запросе к kodik api. Ожидался код "200", получен: "${error.response?.status || 'нет ответа'}"`);
+            throw new ServiceError(`Произошла ошибка при запросе к kodik api. Ожидался код "200", получен: "${error.response?.status || 'нет ответа'}"`, { cause: e });
         }
         if ('error' in data && data['error'] === 'Отсутствует или неверный токен') {
             throw new TokenError('Отсутствует или неверный токен');
@@ -274,7 +274,7 @@ export class KodikParser {
             const resp: AxiosResponse = await axios.get(serv);
             data = resp.data;
         } catch (e) {
-            throw new ServiceError('Ошибка при получении ссылки на данные');
+            throw new ServiceError('Ошибка при получении ссылки на данные', { cause: e });
         }
         if ('error' in data && data['error'] === 'Отсутствует или неверный токен') {
             throw new TokenError('Отсутствует или неверный токен');
@@ -302,7 +302,7 @@ export class KodikParser {
             const resp: AxiosResponse = await axios.get(link);
             data = resp.data;
         } catch (e) {
-            throw new ServiceError('Ошибка при получении страницы данных');
+            throw new ServiceError('Ошибка при получении страницы данных', { cause: e });
         }
         let $: ReturnType<typeof load>;
         if (this.USE_LXML) {
@@ -418,7 +418,7 @@ export class KodikParser {
             const resp: AxiosResponse = await axios.get(link);
             data = resp.data;
         } catch (e) {
-            throw new ServiceError('Ошибка при получении страницы данных');
+            throw new ServiceError('Ошибка при получении страницы данных', { cause: e });
         }
         let $: ReturnType<typeof load>;
         if (this.USE_LXML) {
@@ -515,7 +515,7 @@ export class KodikParser {
             const resp: AxiosResponse = await axios.post(`https://kodik.info${post_link}`, new URLSearchParams(params), { headers: headers });
             data = resp.data;
         } catch (e) {
-            throw new ServiceError('Ошибка при получении ссылки на видео');
+            throw new ServiceError('Ошибка при получении ссылки на видео', { cause: e });
         }
         const data_url = data.links['360'][0].src;
         let url: string;

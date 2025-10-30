@@ -3,6 +3,8 @@
  * 
  * Теперь все пользовательские ошибки сохраняют оригинальную причину
  * в свойстве .cause, что позволяет отслеживать полную цепочку ошибок
+ * 
+ * Примечание: Для запуска этого примера требуется предварительная сборка проекта (npm run build)
  */
 
 const { ServiceError, NoResults } = require('./dist/lib/errors');
@@ -91,6 +93,9 @@ try {
         { cause: originalError }
     );
 } catch (error) {
+    // Количество строк стека для включения в лог (ограничиваем для краткости)
+    const STACK_TRACE_LINES = 3;
+    
     // Такой формат удобен для отправки в системы логирования (Sentry, LogRocket и т.д.)
     const logEntry = {
         timestamp: new Date().toISOString(),
@@ -101,9 +106,9 @@ try {
             message: error.cause.message,
             code: error.cause.code,
             errno: error.cause.errno,
-            stack: error.cause.stack?.split('\n').slice(0, 3).join('\n')
+            stack: error.cause.stack?.split('\n').slice(0, STACK_TRACE_LINES).join('\n')
         } : null,
-        stack: error.stack?.split('\n').slice(0, 3).join('\n')
+        stack: error.stack?.split('\n').slice(0, STACK_TRACE_LINES).join('\n')
     };
     
     console.log('Структурированный лог:');

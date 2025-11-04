@@ -126,7 +126,7 @@ interface AnimeInfo {
 
 ## Ошибки
 
-Все ошибки типизированы:
+Все ошибки типизированы и сохраняют оригинальные ошибки через свойство `cause`:
 
 - `TokenError` - Проблемы с токеном
 - `ServiceError` - Ошибки сервиса
@@ -139,6 +139,31 @@ interface AnimeInfo {
 - `ContentBlocked` - Контент заблокирован
 - `ServiceIsOverloaded` - Сервис перегружен
 - `DecryptionFailure` - Ошибка расшифровки
+
+### Обработка ошибок
+
+Все ошибки сохраняют оригинальную ошибку в свойстве `cause`, что позволяет получить полную информацию:
+
+```typescript
+try {
+    await parser.search('аниме');
+} catch (error) {
+    console.error('Ошибка:', error.message);
+    
+    // Доступ к оригинальной ошибке
+    if (error.cause) {
+        console.error('Оригинальная ошибка:', error.cause);
+        console.error('Stack trace:', error.cause.stack);
+        
+        // Для axios ошибок можно получить детали HTTP запроса
+        if (error.cause.response) {
+            console.error('HTTP статус:', error.cause.response.status);
+            console.error('Данные ответа:', error.cause.response.data);
+            console.error('URL запроса:', error.cause.config?.url);
+        }
+    }
+}
+```
 
 ## Константы
 

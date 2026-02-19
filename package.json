@@ -1,6 +1,6 @@
 {
   "name": "@aerosstube/anime-parser-kodik-ts",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "TypeScript библиотека для парсинга аниме с сайта Kodik с полной типизацией",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -32,23 +32,23 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aerosstube/anime-parser-kodik-ts.git"
+    "url": "git+https://github.com/aerosstube/anime-kodik-parser.git"
   },
   "bugs": {
-    "url": "https://github.com/aerosstube/anime-parser-kodik-ts/issues"
+    "url": "https://github.com/aerosstube/anime-kodik-parser/issues"
   },
-  "homepage": "https://github.com/aerosstube/anime-parser-kodik-ts#readme",
+  "homepage": "https://github.com/aerosstube/anime-kodik-parser#readme",
   "dependencies": {
-    "axios": "^1.9.0",
+    "axios": "^1.13.5",
     "base-64": "^1.0.0",
-    "cheerio": "^1.0.0"
+    "cheerio": "^1.2.0"
   },
   "devDependencies": {
     "@types/base-64": "^1.0.2",
-    "@types/node": "^22.15.21",
+    "@types/node": "^25.3.0",
     "readline-sync": "^1.4.10",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=14.0.0"

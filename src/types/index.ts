@@ -13,8 +13,8 @@ export interface AnimeResult {
     kinopoisk_id: string | null;
     imdb_id: string | null;
     worldart_link: string | null;
-    additional_data: any;
-    material_data: any;
+    additional_data: Record<string, unknown>;
+    material_data: Record<string, unknown> | null;
     link: string;
     id?: string;
     episodes_count?: number;
@@ -31,7 +31,7 @@ export interface Translation {
 export interface AnimeInfo {
     translations: Translation[];
     series_count: number;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 export interface SearchResponse {
@@ -45,7 +45,7 @@ export type IdType = 'shikimori' | 'kinopoisk' | 'imdb';
 export interface ApiOptions {
     token?: string | null;
     allow_warnings?: boolean;
-    _args?: any;
+    _args?: Record<string, unknown>;
     _endpoint?: string | null;
 }
 
@@ -61,5 +61,5 @@ export interface SearchOptions {
 export interface RequestOptions {
     headers?: Record<string, string>;
     timeout?: number;
-    [key: string]: any;
-} 
+    [key: string]: unknown;
+}

@@ -29,16 +29,6 @@ npm run build
 npm run example
 ```
 
-### Интерактивный режим
-```bash
-npm run start
-```
-
-### Разработка (с автоперезагрузкой)
-```bash
-npm run dev
-```
-
 ## Использование
 
 ### Основные классы
@@ -77,7 +67,7 @@ const results = await search
 
 // Список через API
 const list = await createList();
-const results = await list
+const listResults = await list
     .limit(10)
     .sort('year')
     .order('desc')
@@ -101,7 +91,7 @@ interface AnimeResult {
     imdb_id: string | null;
     worldart_link: string | null;
     additional_data: Record<string, unknown>;
-    material_data: unknown;
+    material_data: Record<string, unknown> | null;
     link: string;
 }
 ```
@@ -124,64 +114,78 @@ interface AnimeInfo {
 }
 ```
 
+### SearchResponse
+```typescript
+interface SearchResponse {
+    total: number;
+    time: string;
+    results: AnimeResult[];
+}
+```
+
 ## Ошибки
 
-Все ошибки типизированы:
+Все ошибки наследуются от общего базового класса `KodikError`:
 
-- `TokenError` - Проблемы с токеном
-- `ServiceError` - Ошибки сервиса
-- `PostArgumentsError` - Неверные аргументы
-- `NoResults` - Нет результатов
-- `UnexpectedBehavior` - Неожиданное поведение
-- `QualityNotFound` - Качество не найдено
-- `AgeRestricted` - Возрастные ограничения
-- `TooManyRequests` - Слишком много запросов
-- `ContentBlocked` - Контент заблокирован
-- `ServiceIsOverloaded` - Сервис перегружен
-- `DecryptionFailure` - Ошибка расшифровки
+- `TokenError` — проблемы с токеном
+- `ServiceError` — ошибки сервиса
+- `PostArgumentsError` — неверные аргументы
+- `NoResults` — нет результатов
+- `UnexpectedBehavior` — неожиданное поведение
+- `QualityNotFound` — качество не найдено
+- `AgeRestricted` — возрастные ограничения
+- `TooManyRequests` — слишком много запросов
+- `ContentBlocked` — контент заблокирован
+- `ServiceIsOverloaded` — сервис перегружен
+- `DecryptionFailure` — ошибка расшифровки
 
-## Константы
+## Константы (Enums)
 
 ### Типы аниме
 ```typescript
-AnimeKind.TV, AnimeKind.MOVIE, AnimeKind.OVA, etc.
+import { AnimeKind } from '@aerosstube/anime-parser-kodik-ts';
+
+AnimeKind.TV    // 'tv'
+AnimeKind.MOVIE // 'movie'
+AnimeKind.OVA   // 'ova'
+AnimeKind.ONA   // 'ona'
+// ...
 ```
 
 ### Жанры
 ```typescript
-AnimeGenres.ACTION, AnimeGenres.COMEDY, AnimeGenres.DRAMA, etc.
+import { AnimeGenres } from '@aerosstube/anime-parser-kodik-ts';
+
+AnimeGenres.ACTION  // 'Экшен'
+AnimeGenres.COMEDY  // 'Комедия'
+AnimeGenres.DRAMA   // 'Драма'
+// ...
 ```
 
 ### Сортировка
 ```typescript
-SortList.YEAR, SortList.CREATED_AT, SortList.UPDATED_AT, etc.
-OrderList.ASC, OrderList.DESC
+import { SortList, OrderList } from '@aerosstube/anime-parser-kodik-ts';
+
+SortList.YEAR       // 'year'
+SortList.CREATED_AT // 'created_at'
+OrderList.ASC       // 'asc'
+OrderList.DESC      // 'desc'
 ```
-
-## Отличия от JavaScript версии
-
-1. **Полная типизация** - все функции, классы и интерфейсы типизированы
-2. **Отсутствие `any`** - используются конкретные типы везде
-3. **Async/await** - синхронные методы заменены на асинхронные
-4. **Строгая проверка типов** - TypeScript компилятор проверяет типы
-5. **Автодополнение** - IDE предоставляет полное автодополнение
-6. **Документация в коде** - JSDoc комментарии для всех публичных методов
 
 ## Структура проекта
 
 ```
-AnimeParsers_Node_Dir_TS/
+anime-kodik-parser/
 ├── src/
 │   ├── lib/
 │   │   ├── errors.ts          # Классы ошибок
-│   │   ├── internal_tools.ts  # Внутренние инструменты
+│   │   ├── internal_tools.ts  # HTTP-обёртки
 │   │   ├── parser_kodik.ts    # Основной парсер
-│   │   └── api_kodik.ts       # API классы
+│   │   └── api_kodik.ts       # API классы и enums
 │   ├── types/
 │   │   └── index.ts           # Интерфейсы и типы
 │   ├── index.ts               # Главный экспорт
-│   ├── example.ts             # Пример использования
-│   └── entry.ts               # Интерактивный режим
+│   └── example.ts             # Пример использования
 ├── dist/                      # Скомпилированные файлы
 ├── package.json
 ├── tsconfig.json
@@ -191,9 +195,9 @@ AnimeParsers_Node_Dir_TS/
 ## Требования
 
 - Node.js >= 14
-- TypeScript >= 4.0
-- Зависимости: axios, cheerio, base-64, readline-sync
+- TypeScript >= 5.0
+- Зависимости: axios, cheerio, base-64
 
 ## Лицензия
 
-MIT 
+MIT

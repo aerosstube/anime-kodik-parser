@@ -7,22 +7,21 @@ export * from './types';
 // Экспорт основных классов
 export { KodikParser } from './lib/parser_kodik';
 export { Response, AsyncSession } from './lib/internal_tools';
-export { 
-    Api, 
-    KodikSearch, 
-    KodikList, 
-    OrderList, 
-    SortList, 
-    AnimeKind, 
-    Types, 
-    AnimeGenres 
+export {
+    Api,
+    KodikSearch,
+    KodikList,
+    OrderList,
+    SortList,
+    AnimeKind,
+    Types,
+    AnimeGenres,
 } from './lib/api_kodik';
 
-// Импорты для функций
+// Импорты для фабричных функций
 import { KodikParser } from './lib/parser_kodik';
 import { KodikSearch, KodikList } from './lib/api_kodik';
 
-// Удобные функции для создания экземпляров
 export async function createParser(token?: string | null): Promise<KodikParser> {
     const finalToken = token || await KodikParser.getToken();
     return new KodikParser(finalToken);
@@ -39,5 +38,5 @@ export async function createList(token?: string | null): Promise<KodikList> {
 }
 
 export async function getToken(): Promise<string> {
-    return await KodikParser.getToken();
-} 
+    return KodikParser.getToken();
+}

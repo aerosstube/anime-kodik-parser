@@ -1,16 +1,11 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { RequestOptions } from '../types';
 
-const CAN_WORK = true;
-
 export class Response {
-    /**
-     * Класс для удобства использования AsyncSession
-     */
-    public status: number;
-    public status_code: number;
-    public text: string;
-    public url: string;
+    public readonly status: number;
+    public readonly status_code: number;
+    public readonly text: string;
+    public readonly url: string;
 
     constructor(status: number, text: string, url: string) {
         this.status = status;
@@ -19,49 +14,40 @@ export class Response {
         this.url = url;
     }
 
-    json<T = any>(): T {
-        return JSON.parse(this.text);
+    json<T = unknown>(): T {
+        return JSON.parse(this.text) as T;
     }
 }
 
 export class AsyncSession {
-    /**
-     * Класс-обертка для удобства использования асинхронных запросов
-     */
-    constructor() {
-        if (!CAN_WORK) {
-            throw new Error('Невозможно получить доступ к библиотекам "axios". Проверьте правильность установки библиотеки.');
-        }
-    }
-
     async get(url: string, options: RequestOptions = {}): Promise<Response> {
         const config: AxiosRequestConfig = {
             ...options,
-            headers: options.headers || {}
+            headers: options.headers || {},
         };
 
         const response: AxiosResponse = await axios.get(url, config);
-        return new Response(
-            response.status,
-            typeof response.data === 'string' ? response.data : JSON.stringify(response.data),
-            response.request?.res?.responseUrl || url
-        );
+        const responseUrl = response.request?.res?.responseUrl || url;
+        const text = typeof response.data === 'string'
+            ? response.data
+            : JSON.stringify(response.data);
+
+        return new Response(response.status, text, responseUrl);
     }
 
-    async post(url: string, options: RequestOptions & { data?: any } = {}): Promise<Response> {
+    async post(url: string, options: RequestOptions & { data?: unknown } = {}): Promise<Response> {
         const { data, ...config } = options;
         const axiosConfig: AxiosRequestConfig = {
             ...config,
-            headers: options.headers || {}
+            headers: options.headers || {},
         };
 
         const response: AxiosResponse = await axios.post(url, data, axiosConfig);
-        return new Response(
-            response.status,
-            typeof response.data === 'string' ? response.data : JSON.stringify(response.data),
-            response.request?.res?.responseUrl || url
-        );
+        const responseUrl = response.request?.res?.responseUrl || url;
+        const text = typeof response.data === 'string'
+            ? response.data
+            : JSON.stringify(response.data);
+
+        return new Response(response.status, text, responseUrl);
     }
 }
-
-export { CAN_WORK }; 

@@ -6,139 +6,30 @@ interface ErrorOptions {
     cause?: unknown;
 }
 
-export class TokenError extends Error {
+class KodikError extends Error {
     cause?: unknown;
-    
+
     constructor(message: string, options?: ErrorOptions) {
         super(message);
-        this.name = 'TokenError';
+        this.name = this.constructor.name;
         if (options?.cause) {
             this.cause = options.cause;
         }
     }
 }
 
-export class ServiceError extends Error {
-    cause?: unknown;
-    
-    constructor(message: string, options?: ErrorOptions) {
-        super(message);
-        this.name = 'ServiceError';
-        if (options?.cause) {
-            this.cause = options.cause;
-        }
-    }
-}
+export class TokenError extends KodikError {}
+export class ServiceError extends KodikError {}
+export class PostArgumentsError extends KodikError {}
+export class NoResults extends KodikError {}
+export class UnexpectedBehavior extends KodikError {}
+export class QualityNotFound extends KodikError {}
+export class AgeRestricted extends KodikError {}
+export class TooManyRequests extends KodikError {}
+export class ContentBlocked extends KodikError {}
+export class ServiceIsOverloaded extends KodikError {}
+export class DecryptionFailure extends KodikError {}
 
-export class PostArgumentsError extends Error {
-    cause?: unknown;
-    
-    constructor(message: string, options?: ErrorOptions) {
-        super(message);
-        this.name = 'PostArgumentsError';
-        if (options?.cause) {
-            this.cause = options.cause;
-        }
-    }
-}
-
-export class NoResults extends Error {
-    cause?: unknown;
-    
-    constructor(message: string, options?: ErrorOptions) {
-        super(message);
-        this.name = 'NoResults';
-        if (options?.cause) {
-            this.cause = options.cause;
-        }
-    }
-}
-
-export class UnexpectedBehavior extends Error {
-    cause?: unknown;
-    
-    constructor(message: string, options?: ErrorOptions) {
-        super(message);
-        this.name = 'UnexpectedBehavior';
-        if (options?.cause) {
-            this.cause = options.cause;
-        }
-    }
-}
-
-export class QualityNotFound extends Error {
-    cause?: unknown;
-    
-    constructor(message: string, options?: ErrorOptions) {
-        super(message);
-        this.name = 'QualityNotFound';
-        if (options?.cause) {
-            this.cause = options.cause;
-        }
-    }
-}
-
-export class AgeRestricted extends Error {
-    cause?: unknown;
-    
-    constructor(message: string, options?: ErrorOptions) {
-        super(message);
-        this.name = 'AgeRestricted';
-        if (options?.cause) {
-            this.cause = options.cause;
-        }
-    }
-}
-
-export class TooManyRequests extends Error {
-    cause?: unknown;
-    
-    constructor(message: string, options?: ErrorOptions) {
-        super(message);
-        this.name = 'TooManyRequests';
-        if (options?.cause) {
-            this.cause = options.cause;
-        }
-    }
-}
-
-export class ContentBlocked extends Error {
-    cause?: unknown;
-    
-    constructor(message: string, options?: ErrorOptions) {
-        super(message);
-        this.name = 'ContentBlocked';
-        if (options?.cause) {
-            this.cause = options.cause;
-        }
-    }
-}
-
-export class ServiceIsOverloaded extends Error {
-    cause?: unknown;
-    
-    constructor(message: string, options?: ErrorOptions) {
-        super(message);
-        this.name = 'ServiceIsOverloaded';
-        if (options?.cause) {
-            this.cause = options.cause;
-        }
-    }
-}
-
-export class DecryptionFailure extends Error {
-    cause?: unknown;
-    
-    constructor(message: string, options?: ErrorOptions) {
-        super(message);
-        this.name = 'DecryptionFailure';
-        if (options?.cause) {
-            this.cause = options.cause;
-        }
-    }
-}
-
-// Экспорт всех ошибок в одном объекте для совместимости
 export const errors = {
     TokenError,
     ServiceError,
@@ -150,5 +41,5 @@ export const errors = {
     TooManyRequests,
     ContentBlocked,
     ServiceIsOverloaded,
-    DecryptionFailure
-}; 
+    DecryptionFailure,
+};

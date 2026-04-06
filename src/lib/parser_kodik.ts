@@ -464,15 +464,15 @@ export class KodikParser {
     // --- Content type detection ---
 
     private isSerial(iframeUrl: string): boolean {
-        const idx = iframeUrl.indexOf('.info/');
+        const idx = iframeUrl.indexOf('kodikplayer.com/');
 
-        return idx !== -1 && idx + 6 < iframeUrl.length && iframeUrl[idx + 6] === 's';
+        return idx !== -1 && idx + 16 < iframeUrl.length && iframeUrl[idx + 16] === 's';
     }
 
     private isVideo(iframeUrl: string): boolean {
-        const idx = iframeUrl.indexOf('.info/');
+        const idx = iframeUrl.indexOf('kodikplayer.com/');
 
-        return idx !== -1 && idx + 6 < iframeUrl.length && iframeUrl[idx + 6] === 'v';
+        return idx !== -1 && idx + 16 < iframeUrl.length && iframeUrl[idx + 16] === 'v';
     }
 
     // --- Info parsing ---

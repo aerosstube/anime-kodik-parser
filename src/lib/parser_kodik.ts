@@ -32,8 +32,8 @@ interface VideoData {
 
 // --- Constants ---
 
-const KODIK_API_BASE = 'https://kodikapi.com';
-const KODIK_PLAYER_BASE = 'https://kodik.info';
+const KODIK_API_BASE = 'https://kodik-api.com';
+const KODIK_PLAYER_BASE = 'https://kodikplayer.com';
 const KODIK_DB_BASE = 'https://kodikdb.com';
 const TOKEN_SCRIPT_URL = 'https://kodik-add.com/add-players.min.js?v=2';
 
